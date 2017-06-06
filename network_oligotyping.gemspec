@@ -24,7 +24,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "yard", "~> 0.9.9"
 
+  spec.add_runtime_dependency "abort_if", "~> 0.2"
   spec.add_runtime_dependency "parse_fasta", "~> 2.2"
   spec.add_runtime_dependency "shannon", "~> 0.1.1"
 end
