@@ -1,0 +1,6 @@
+node1	node2	sample
+lebron	kyrie	cavs
+kyrie	love	cavs
+love	lebron	cavs
+steph	klay	warriors
+kd	steph	warriors
