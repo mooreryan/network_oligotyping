@@ -6,9 +6,13 @@ require "set"
 include AbortIf
 include AbortIf::Assert
 
-require "network_oligotyping/version"
-require "network_oligotyping/node"
 require "network_oligotyping/graph"
+require "network_oligotyping/node"
+require "network_oligotyping/utils"
+require "network_oligotyping/version"
+
+include NetworkOligotyping::Utils
+
 
 module NetworkOligotyping
 

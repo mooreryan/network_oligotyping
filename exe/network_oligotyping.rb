@@ -69,4 +69,4 @@ printf "masked_idx for key otu: %s\n", masked_idx
 puts;puts
 
 graph = NetworkOligotyping::Graph.read_graph opts[:otu_network]
-p graph
+puts graph
