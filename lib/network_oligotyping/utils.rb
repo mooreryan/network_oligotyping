@@ -22,7 +22,7 @@ module NetworkOligotyping
     end
 
     # TODO is this prob of undirected connection or directed
-    def prob_of_connection num_edges, num_nodes
+    def prob_of_connection num_nodes, num_edges
       num_edges / combination(num_nodes, 2).to_f
     end
   end

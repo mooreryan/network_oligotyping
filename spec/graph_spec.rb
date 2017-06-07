@@ -22,6 +22,16 @@ def new_node name, connections
   NetworkOligotyping::Node.new name, connections
 end
 
+def graph_with_connections nodes
+  graph = NetworkOligotyping::Graph.new
+
+  nodes.each do |node|
+    graph.add! node
+  end
+
+  graph
+end
+
 RSpec.describe NetworkOligotyping::Graph do
   let(:test_dir) { File.join File.dirname(__FILE__), "test_files" }
   let(:graph_fname) { File.join test_dir, "graph.txt" }
@@ -32,10 +42,17 @@ RSpec.describe NetworkOligotyping::Graph do
   let(:node_pie) { new_node "pie", %w[apple] }
 
   let(:graph) { NetworkOligotyping::Graph.new }
+
   let(:nodes) {
-    [Node.new("apple", ["pie", "good"]),
-     Node.new("pie", ["apple"]),
-     Node.new("good", ["apple"]),]
+    [new_node("apple", ["pie", "good"]),
+     new_node("pie", ["apple"]),
+     new_node("good", ["apple"]),]
+  }
+  let(:edges) {
+    [%w[apple pie],
+     %w[apple good],
+     %w[pie apple],
+     %w[good apple],]
   }
 
   subject { graph }
@@ -65,6 +82,29 @@ RSpec.describe NetworkOligotyping::Graph do
       nodes_ht = { "apple" => new_node }
 
       expect(graph.nodes).to eq nodes_ht
+    end
+  end
+
+  describe "#edges" do
+    it "returns the edges of the graph" do
+      nodes.each do |node|
+        graph.add! node
+      end
+
+      expect(graph.edges).to eq edges
+    end
+  end
+
+  describe "#prob_connection" do
+    it "returns the probability of connection between 2 nodes" do
+      graph = graph_with_connections nodes
+
+      # from graph_with_connections
+      num_edges = 4
+      num_nodes = 3
+      actual = num_edges / num_nodes.times.map(&:itself).combination(2).count.to_f
+
+      expect(graph.prob_connection).to eq actual
     end
   end
 

@@ -1,5 +1,7 @@
 module NetworkOligotyping
   class Graph
+    # TODO make nodes return actually all nodes, and have a separate
+    # thing for the name => node hash
     attr_accessor :nodes
 
     def self.read_graph fname
@@ -22,6 +24,21 @@ module NetworkOligotyping
     # Make a new Graph. Sets @nodes = {}
     def initialize
       @nodes = {}
+    end
+
+    def edges
+      edges = []
+      nodes.each do |name, node|
+        node.connections.each do |connected_name|
+          edges << [name, connected_name]
+        end
+      end
+
+      edges
+    end
+
+    def prob_connection
+      prob_of_connection nodes.count, edges.count
     end
 
     # Add a node to the graph.

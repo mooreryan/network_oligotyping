@@ -70,3 +70,11 @@ puts;puts
 
 graph = NetworkOligotyping::Graph.read_graph opts[:otu_network]
 puts graph
+
+############
+
+puts;puts
+
+puts factorial 10
+
+puts graph.connections
