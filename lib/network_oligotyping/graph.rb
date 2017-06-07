@@ -2,6 +2,23 @@ module NetworkOligotyping
   class Graph
     attr_accessor :nodes
 
+    def self.read_graph fname
+      graph = self.new
+      File.open(fname, "rt").each_line.with_index do |line, idx|
+        unless idx.zero?
+          n1, n2, sample = line.chomp.split "\t"
+
+          node1 = NetworkOligotyping::Node.new n1, [n2]
+          node2 = NetworkOligotyping::Node.new n2, [n1]
+
+          graph.add! node1
+          graph.add! node2
+        end
+      end
+
+      graph
+    end
+
     # Make a new Graph. Sets @nodes = {}
     def initialize
       @nodes = {}
@@ -36,21 +53,22 @@ module NetworkOligotyping
       self.nodes == graph.nodes
     end
 
-    def self.read_graph fname
-      graph = self.new
-      File.open(fname, "rt").each_line.with_index do |line, idx|
-        unless idx.zero?
-          n1, n2, sample = line.chomp.split "\t"
+    # Prints out all connections in the graph.
+    #
+    # Since these are undirected graphs internally, it will print out
+    # steph, klay and klay, steph to show that both paths are valid.
+    def to_s
+      ary = ["node1\tnode2"]
 
-          node1 = NetworkOligotyping::Node.new n1, [n2]
-          node2 = NetworkOligotyping::Node.new n2, [n1]
+      self.each_node do |node|
+        this_name = node.name
 
-          graph.add! node1
-          graph.add! node2
+        node.connections.each do |other_name|
+          ary << "#{this_name}\t#{other_name}"
         end
       end
 
-      graph
+      ary.join "\n"
     end
   end
 end
